@@ -1,0 +1,28 @@
+{
+	"initial": [
+		"libs/modules/egret/egret.js",
+		"libs/modules/egret/egret.web.js",
+		"libs/modules/game/game.js",
+		"libs/modules/tween/tween.js",
+		"libs/modules/res/res.js",
+		"promise/bin/promise.js"
+	],
+	"game": [
+		"bin-debug/game/Pig.js",
+		"bin-debug/config/config.js",
+		"bin-debug/game/Clearing.js",
+		"bin-debug/game/Game.js",
+		"bin-debug/game/Gold.js",
+		"bin-debug/game/Gound.js",
+		"bin-debug/game/Head.js",
+		"bin-debug/game/Monster.js",
+		"bin-debug/config/xmlConfig.js",
+		"bin-debug/game/Result.js",
+		"bin-debug/Home.js",
+		"bin-debug/Main.js",
+		"bin-debug/music/Music.js",
+		"bin-debug/page/Activity.js",
+		"bin-debug/page/Cover.js",
+		"bin-debug/page/Ranking.js"
+	]
+}
