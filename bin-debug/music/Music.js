@@ -8,19 +8,20 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Music = (function (_super) {
     __extends(Music, _super);
-    function Music(home) {
+    function Music() {
         var _this = _super.call(this) || this;
-        _this.home = home;
         _this.bgm = new egret.Sound();
         _this.jump = new egret.Sound();
         _this.goid = new egret.Sound();
-        _this.init();
         return _this;
     }
-    Music.prototype.init = function () {
-        this.bgm.load("resource/assets/music/bgm.mp3");
+    Music.prototype.init = function (callback) {
         this.jump.load("resource/assets/music/jump.mp3");
         this.goid.load("resource/assets/music/goid.mp3");
+        this.bgm.load("resource/assets/music/bgm.mp3");
+        this.bgm.addEventListener(egret.Event.COMPLETE, function loadOver(event) {
+            callback();
+        }, this);
     };
     Music.prototype.startMusic = function () {
         this.bgmSoundChannel && this.bgmSoundChannel.stop();

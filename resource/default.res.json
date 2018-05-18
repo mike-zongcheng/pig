@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "character,pig,pig_png,grass,pigBg,dragon_png,dragon,groundHeadBg,font,font_png,clearingNoBg,clearingOkBg,gamePrompt,startCover,startRes,activityBg,prizeBg,loading_png,rankingBg,resultBg,barrage1,barrage2,imgs,musicOff,musicOn",
+			"keys": "character,pig,pig_png,grass,pigBg,dragon_png,dragon,groundHeadBg,font,font_png,clearingNoBg,clearingOkBg,gamePrompt,startCover,startRes,activityBg,prizeBg,rankingBg,resultBg,barrage1,barrage2,imgs,musicOff,musicOn",
 			"name": "preload"
 		}
 	],

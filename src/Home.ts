@@ -2,36 +2,21 @@ class Home extends egret.DisplayObjectContainer {
     game: Game
     cover: Cover
     resetStart: boolean = false
-    music = new Music(this)
+    music :Music
     musicStatus: boolean = true
-    constructor(){
+    constructor(data){
         super();
         // RES.loadGroup("preload");
-        window["jQuery"].ajax({ // 请求基础数据
-            type: "get",
-            url: xmlConfig.init,
-            dataType: "json",
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            success: (data)=>{
-                config.logo = data.Logo;
-                window.top.document.querySelector("title").innerHTML = data.Title;
-                document.querySelector(".loding")["style"].display = "none";
-                config.nickName = data.User.NickName;
-                RES.getResByUrl(data.User.HeadImage, (e)=>{
-                    config.HeadImage = e;
-                    this.game = new Game(this)
-                    this.cover = new Cover(this)
-                    this.init();
-                }, this, RES.ResourceItem.TYPE_IMAGE );
-            },
-            error: (XMLHttpRequest, textStatus, errorThrown)=>{
-                XMLHttpRequest.responseText != "" && (window.location.href = JSON.parse(XMLHttpRequest.responseText).oauthUrl);
-            }
-        });
-        
+        config.logo = data.Logo;
+        window.top.document.querySelector("title").innerHTML = data.Title;
+        document.querySelector(".loding")["style"].display = "none";
+        config.nickName = data.User.NickName;
+        RES.getResByUrl(data.User.HeadImage, (e)=>{
+            config.HeadImage = e;
+            this.game = new Game(this)
+            this.cover = new Cover(this)
+            this.init();
+        }, this, RES.ResourceItem.TYPE_IMAGE );
     }
     init() :void{
         this.addChild(this.game)

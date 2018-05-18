@@ -1,4 +1,6 @@
 class Music extends egret.DisplayObjectContainer {
+    home: Home
+
     bgm :egret.Sound = new egret.Sound()
     bgmSoundChannel: egret.SoundChannel
 
@@ -8,14 +10,17 @@ class Music extends egret.DisplayObjectContainer {
     goid :egret.Sound = new egret.Sound()
     goidSoundChannel: egret.SoundChannel
 
-    constructor(public home){
+    constructor(){
         super();
-        this.init();
     }
-    init() :void{
-        this.bgm.load("resource/assets/music/bgm.mp3");
+    init(callback) :void{
         this.jump.load("resource/assets/music/jump.mp3");
         this.goid.load("resource/assets/music/goid.mp3");
+        this.bgm.load("resource/assets/music/bgm.mp3");
+
+        this.bgm.addEventListener(egret.Event.COMPLETE, function loadOver(event:egret.Event) {
+            callback();
+        }, this);
     }
     startMusic(): void{// BGM音效
         this.bgmSoundChannel && this.bgmSoundChannel.stop();

@@ -43,6 +43,7 @@ var Main = (function (_super) {
     // private loadingView: LoadingUI;
     function Main() {
         var _this = _super.call(this) || this;
+        _this.lodingStatus = false;
         config.height = document.querySelector("canvas").height;
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.onAddToStage, _this);
         return _this;
@@ -74,11 +75,32 @@ var Main = (function (_super) {
      * configuration file loading is completed, start to pre-load the preload resource group
      */
     Main.prototype.onConfigComplete = function (event) {
+        var _this = this;
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
         RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
+        window["jQuery"].ajax({
+            type: "get",
+            url: xmlConfig.init,
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function (data) {
+                _this.infoData = data;
+                if (!_this.lodingStatus) {
+                    _this.lodingStatus = true;
+                    return;
+                }
+                _this.GameResEnd();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                XMLHttpRequest.responseText != "" && (window.location.href = JSON.parse(XMLHttpRequest.responseText).oauthUrl);
+            }
+        });
         RES.loadGroup("preload");
     };
     /**
@@ -92,8 +114,22 @@ var Main = (function (_super) {
             RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
             RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
-            this.addChild(new Home());
+            if (!this.lodingStatus) {
+                this.lodingStatus = true;
+                return;
+            }
+            this.GameResEnd();
         }
+    };
+    Main.prototype.GameResEnd = function () {
+        var _this = this;
+        var music = new Music();
+        music.init(function () {
+            var home = new Home(_this.infoData);
+            home.music = music;
+            music.home = home;
+            _this.addChild(home);
+        });
     };
     /**
      * 资源组加载出错

@@ -28,7 +28,8 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 class Main extends egret.DisplayObjectContainer {
-
+    private lodingStatus: boolean = false
+    private infoData: any
     /**
      * 加载进度界面
      * Process interface loading
@@ -38,6 +39,8 @@ class Main extends egret.DisplayObjectContainer {
         super();
         config.height = document.querySelector("canvas").height;
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
+
+        
     }
 
     private onAddToStage(event: egret.Event) {
@@ -80,6 +83,26 @@ class Main extends egret.DisplayObjectContainer {
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
         RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
+        window["jQuery"].ajax({ // 请求基础数据
+            type: "get",
+            url: xmlConfig.init,
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: (data)=>{
+                this.infoData = data;
+                if(!this.lodingStatus){
+                    this.lodingStatus = true;
+                    return;
+                }
+                this.GameResEnd();
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown)=>{
+                XMLHttpRequest.responseText != "" && (window.location.href = JSON.parse(XMLHttpRequest.responseText).oauthUrl);
+            }
+        });
         RES.loadGroup("preload");
     }
 
@@ -94,11 +117,22 @@ class Main extends egret.DisplayObjectContainer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
             RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
-
-            this.addChild(new Home()); 
-            
+            if(!this.lodingStatus){
+                this.lodingStatus = true;
+                return;
+            }
+            this.GameResEnd();
             // this.createGameScene();
         }
+    }
+    private GameResEnd() :void{
+        let music = new Music();
+        music.init(()=>{
+            let home = new Home(this.infoData)
+            home.music = music;
+            music.home = home;
+            this.addChild(home); 
+        })
     }
 
     /**

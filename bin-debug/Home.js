@@ -8,36 +8,21 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Home = (function (_super) {
     __extends(Home, _super);
-    function Home() {
+    function Home(data) {
         var _this = _super.call(this) || this;
         _this.resetStart = false;
-        _this.music = new Music(_this);
         _this.musicStatus = true;
         // RES.loadGroup("preload");
-        window["jQuery"].ajax({
-            type: "get",
-            url: xmlConfig.init,
-            dataType: "json",
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            success: function (data) {
-                config.logo = data.Logo;
-                window.top.document.querySelector("title").innerHTML = data.Title;
-                document.querySelector(".loding")["style"].display = "none";
-                config.nickName = data.User.NickName;
-                RES.getResByUrl(data.User.HeadImage, function (e) {
-                    config.HeadImage = e;
-                    _this.game = new Game(_this);
-                    _this.cover = new Cover(_this);
-                    _this.init();
-                }, _this, RES.ResourceItem.TYPE_IMAGE);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                XMLHttpRequest.responseText != "" && (window.location.href = JSON.parse(XMLHttpRequest.responseText).oauthUrl);
-            }
-        });
+        config.logo = data.Logo;
+        window.top.document.querySelector("title").innerHTML = data.Title;
+        document.querySelector(".loding")["style"].display = "none";
+        config.nickName = data.User.NickName;
+        RES.getResByUrl(data.User.HeadImage, function (e) {
+            config.HeadImage = e;
+            _this.game = new Game(_this);
+            _this.cover = new Cover(_this);
+            _this.init();
+        }, _this, RES.ResourceItem.TYPE_IMAGE);
         return _this;
     }
     Home.prototype.init = function () {
