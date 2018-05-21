@@ -2,6 +2,7 @@ var config = {
     logo: "",
     moreGame: "http://wx.xiaomaichang.net",
     complaintsAddress: "http://www.xiaomaichang.net/other/complain",
+    upDataMaxNumber: 5,
     HeadImage: new egret.Texture(),
     nickName: "",
     width: 1080,

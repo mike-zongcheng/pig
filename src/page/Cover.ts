@@ -107,7 +107,7 @@ class Cover extends egret.DisplayObjectContainer {
     printLogo(e:egret.Texture) :void{// logo
         let logo:egret.Bitmap = new egret.Bitmap(e);
         logo.x = (config.width - logo.width) /2;
-        logo.y = config.height * 0.685;
+        logo.y = config.height * 0.682;
         this.addChildAt(logo, 2);
     }
     musicBut(){// 音乐按钮

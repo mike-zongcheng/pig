@@ -13,6 +13,7 @@ var Game = (function (_super) {
         _this.home = home;
         _this.visible = false;
         _this.stopTween = true;
+        _this.ajaxStatus = false;
         _this.pig = new Pig(_this); // 小猪佩奇
         _this.ground = new Ground(_this); // 地面
         _this.gold = new Gold(_this); // 金币
@@ -119,8 +120,12 @@ var Game = (function (_super) {
         }
         return false;
     };
-    Game.prototype.gameOver = function () {
+    Game.prototype.upData = function (count) {
         var _this = this;
+        if (count === void 0) { count = 1; }
+        if (count > config.upDataMaxNumber) {
+            return;
+        }
         window["jQuery"].ajax({
             type: "post",
             url: xmlConfig.over,
@@ -132,8 +137,17 @@ var Game = (function (_super) {
             xhrFields: {
                 withCredentials: true
             },
-            success: function success(res) { }
+            success: function (res) {
+                _this.ajaxStatus = false;
+            },
+            error: function () {
+                _this.upData(count + 1);
+            }
         });
+    };
+    Game.prototype.gameOver = function () {
+        var _this = this;
+        this.head.startText.text = this.head.schedule + "";
         setTimeout(function () {
             _this.resetStatus = true;
             _this.result.show();
@@ -143,6 +157,11 @@ var Game = (function (_super) {
             //     this.clearing.showFailure();
             // }
         }, 1000);
+        if (this.ajaxStatus) {
+            return;
+        }
+        this.ajaxStatus = true;
+        this.upData();
     };
     Game.prototype.start = function () {
         clearInterval(this.stopTime);

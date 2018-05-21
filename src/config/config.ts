@@ -3,6 +3,7 @@ var config = {
     logo: "", // logo地址
     moreGame: "http://wx.xiaomaichang.net",// 更多游戏
     complaintsAddress: "http://www.xiaomaichang.net/other/complain",// 投诉网址
+    upDataMaxNumber: 5,// 游戏结束重试次数
     HeadImage: new egret.Texture(),
     nickName: "",
     width: 1080,

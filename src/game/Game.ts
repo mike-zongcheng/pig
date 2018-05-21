@@ -2,6 +2,7 @@ class Game extends egret.DisplayObjectContainer {
     visible:boolean = false
     stopTween: boolean = true
     stopTime: number
+    ajaxStatus :boolean = false
     logo: egret.Texture// Logo图片
     pig: Pig = new Pig(this)// 小猪佩奇
     ground: Ground = new Ground(this)// 地面
@@ -117,7 +118,10 @@ class Game extends egret.DisplayObjectContainer {
         }
         return false;
     }
-    gameOver() :void{// 游戏结束处理函数
+    upData(count:number=1){// 上传结束数据
+        if(count > config.upDataMaxNumber){
+            return;
+        }
         window["jQuery"].ajax({ // 请求基础数据
             type: "post",
             url: xmlConfig.over,
@@ -129,9 +133,16 @@ class Game extends egret.DisplayObjectContainer {
             xhrFields: {
                 withCredentials: true
             },
-            success: function success(res) {}
+            success: (res)=>{
+                this.ajaxStatus = false;
+            },
+            error:()=>{
+                this.upData(count+1);
+            }
         });
-        
+    }
+    gameOver() :void{// 游戏结束处理函数
+        this.head.startText.text = this.head.schedule + "";
         setTimeout(()=>{
             this.resetStatus = true;
             this.result.show();
@@ -141,6 +152,11 @@ class Game extends egret.DisplayObjectContainer {
             //     this.clearing.showFailure();
             // }
         }, 1000)
+        if(this.ajaxStatus){
+            return;
+        }
+        this.ajaxStatus = true;
+        this.upData();
     }
     start() :void{// 游戏开始
         clearInterval(this.stopTime);

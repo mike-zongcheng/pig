@@ -112,7 +112,7 @@ var Cover = (function (_super) {
     Cover.prototype.printLogo = function (e) {
         var logo = new egret.Bitmap(e);
         logo.x = (config.width - logo.width) / 2;
-        logo.y = config.height * 0.685;
+        logo.y = config.height * 0.682;
         this.addChildAt(logo, 2);
     };
     Cover.prototype.musicBut = function () {
