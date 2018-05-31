@@ -51,7 +51,7 @@ class Game extends egret.DisplayObjectContainer {
         tutorial.x = tutorial.y = 0;
         tutorial.visible = true;
         tutorial.touchEnabled = true;
-        this.addChild(tutorial)
+        this.addChild(tutorial);
         tutorial.addEventListener(egret.TouchEvent.TOUCH_BEGIN, ()=>{
             let date: Date = new Date();
             date.setDate(date.getDate()+3000);

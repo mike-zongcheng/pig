@@ -56,6 +56,7 @@ class Cover extends egret.DisplayObjectContainer {
         activity.y = config.height * 0.018;
         activity.touchEnabled = true;
         activity.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+            window["_czc"].push(["_trackEvent","小猪佩奇","首页操作","点击排行榜"]);
             this.ranking.show();
         }, this);
         this.addChild(activity); 
@@ -68,6 +69,7 @@ class Cover extends egret.DisplayObjectContainer {
         this.addChild(more); 
 
         more.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{
+            window["_czc"].push(["_trackEvent","小猪佩奇","首页操作","点击更多游戏"]);
             window.top.location.href = config.moreGame;
         }, this);
     }
@@ -118,11 +120,13 @@ class Cover extends egret.DisplayObjectContainer {
         musicBtn.touchEnabled = musicBtn2.touchEnabled = true;
         musicBtn2.visible = false;
         musicBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{// 不播放
+            window["_czc"].push(["_trackEvent","小猪佩奇","首页操作","关闭音乐"]);
             this.home.musicStatus = false;
             musicBtn2.visible = true;
             musicBtn.visible = false;
         }, this);
         musicBtn2.addEventListener(egret.TouchEvent.TOUCH_TAP, ()=>{// 播放
+            window["_czc"].push(["_trackEvent","小猪佩奇","首页操作","打开音乐"]);
             this.home.musicStatus = true;
             musicBtn2.visible = false;
             musicBtn.visible = true;

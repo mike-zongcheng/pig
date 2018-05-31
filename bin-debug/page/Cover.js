@@ -62,6 +62,7 @@ var Cover = (function (_super) {
         activity.y = config.height * 0.018;
         activity.touchEnabled = true;
         activity.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            window["_czc"].push(["_trackEvent", "小猪佩奇", "首页操作", "点击排行榜"]);
             _this.ranking.show();
         }, this);
         this.addChild(activity);
@@ -73,6 +74,7 @@ var Cover = (function (_super) {
         more.touchEnabled = true;
         this.addChild(more);
         more.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            window["_czc"].push(["_trackEvent", "小猪佩奇", "首页操作", "点击更多游戏"]);
             window.top.location.href = config.moreGame;
         }, this);
     };
@@ -123,11 +125,13 @@ var Cover = (function (_super) {
         musicBtn.touchEnabled = musicBtn2.touchEnabled = true;
         musicBtn2.visible = false;
         musicBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            window["_czc"].push(["_trackEvent", "小猪佩奇", "首页操作", "关闭音乐"]);
             _this.home.musicStatus = false;
             musicBtn2.visible = true;
             musicBtn.visible = false;
         }, this);
         musicBtn2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            window["_czc"].push(["_trackEvent", "小猪佩奇", "首页操作", "打开音乐"]);
             _this.home.musicStatus = true;
             musicBtn2.visible = false;
             musicBtn.visible = true;

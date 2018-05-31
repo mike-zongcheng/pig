@@ -8,15 +8,15 @@
 		"promise/bin/promise.js"
 	],
 	"game": [
+		"bin-debug/config/config.js",
 		"bin-debug/config/xmlConfig.js",
-		"bin-debug/game/Pig.js",
 		"bin-debug/game/Clearing.js",
 		"bin-debug/game/Game.js",
 		"bin-debug/game/Gold.js",
 		"bin-debug/game/Gound.js",
 		"bin-debug/game/Head.js",
 		"bin-debug/game/Monster.js",
-		"bin-debug/config/config.js",
+		"bin-debug/game/Pig.js",
 		"bin-debug/game/Result.js",
 		"bin-debug/Home.js",
 		"bin-debug/Main.js",

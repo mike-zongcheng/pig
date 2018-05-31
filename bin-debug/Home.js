@@ -35,6 +35,7 @@ var Home = (function (_super) {
         }, this, RES.ResourceItem.TYPE_IMAGE);
     };
     Home.prototype.start = function () {
+        window["_czc"].push(["_trackEvent", "小猪佩奇", "首页操作", "点击开始游戏"]);
         // this.removeChild(this.cover);
         this.cover.visible = false;
         this.game.visible = true;

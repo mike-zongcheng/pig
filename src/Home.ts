@@ -28,6 +28,7 @@ class Home extends egret.DisplayObjectContainer {
         }, this, RES.ResourceItem.TYPE_IMAGE );  
     }
     start() :void{
+        window["_czc"].push(["_trackEvent","小猪佩奇","首页操作","点击开始游戏"]);
         // this.removeChild(this.cover);
         this.cover.visible = false;
         this.game.visible = true;
